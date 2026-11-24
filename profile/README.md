@@ -75,27 +75,22 @@ Notificaciones push, bloqueos, denuncias y moderación.
 
 ## 🏗️ Arquitectura
 
-```
-┌──────────────────┐   ┌──────────────────┐
-│  📱 Android       │   │  🍎 iOS           │
-│  Kotlin · Compose │   │  Swift · SwiftUI  │
-└────────┬─────────┘   └─────────┬────────┘
-         │        HTTPS · REST · WebSocket
-         └────────────┬───────────┘
-                      ▼
-         ┌────────────────────────┐
-         │   ☕ revibe-backend     │
-         │  Java · Spring Boot    │
-         │  Toda la lógica vive   │
-         │        aquí            │
-         └──┬─────────┬────────┬──┘
-            │         │        │
-            ▼         ▼        ▼
-     ┌──────────┐ ┌───────┐ ┌─────────┐      ┌──────────────┐
-     │🐘Postgres│ │🟥Redis│ │🔵 Neo4j │      │ 🗂️ Object    │
-     │  fuente  │ │sesión,│ │ grafo   │      │   storage    │
-     │de verdad │ │límites│ │ social  │      │   (fotos)    │
-     └──────────┘ └───────┘ └─────────┘      └──────────────┘
+```mermaid
+flowchart TB
+    A["📱 Android<br/>Kotlin · Jetpack Compose"]
+    I["🍎 iOS<br/>Swift · SwiftUI"]
+    B["☕ revibe-backend<br/>Java · Spring Boot<br/><i>toda la lógica vive aquí</i>"]
+    P[("🐘 PostgreSQL<br/>fuente de verdad")]
+    R[("🟥 Redis<br/>sesiones · límites")]
+    N[("🔵 Neo4j<br/>grafo social")]
+    S[("🗂️ Object storage<br/>fotos")]
+
+    A -- "HTTPS · REST · WebSocket" --> B
+    I -- "HTTPS · REST · WebSocket" --> B
+    B --> P
+    B --> R
+    B --> N
+    B --> S
 ```
 
 | Pieza | Para qué |
