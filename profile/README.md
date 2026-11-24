@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✨ Revibe
+# Revibe
 
 ### Vive los planes. Comparte los recuerdos. Divide los gastos.
 
